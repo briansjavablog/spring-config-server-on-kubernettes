@@ -1,10 +1,8 @@
 /target/
 !.mvn/wrapper/maven-wrapper.jar
-logs/
 
 ### IntelliJ IDEA ###
-.idea/*
+.idea
 *.iws
 *.iml
 *.ipr
-

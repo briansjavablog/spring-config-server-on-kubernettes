@@ -1,0 +1,23 @@
+version: "3"
+
+services:
+   config-service:
+      image: config-service
+      container_name: config-service
+      networks:
+         - micro-service-network
+      ports:
+         - "8888:8888"
+
+   config-consumer-service:
+      image: config-consumer-service
+      container_name: config-consumer-service
+      networks:
+         - micro-service-network
+      ports:
+         - "8080:8080"
+      environment:
+         WAIT_HOSTS: config-service:8888
+
+networks:
+   micro-service-network:
