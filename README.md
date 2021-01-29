@@ -36,8 +36,8 @@ the config-service, which in turn pulls them from the configured Github reposito
 ```
 curl localhost:8888/config-consumer-service/uat/main
 ```
-This will return a JSON response with the connection and read timeouts for teh various profiles configured. 
-These properties are pulled from the git repository
+This will return a JSON response with the configuration for the uat profile specified, as well as
+the default configuration. These properties are pulled from the git repository (main branch)
 ```
 {
 	"name": "config-consumer-service",
