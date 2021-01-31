@@ -1,0 +1,69 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloud-config-server-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: config-service
+  template:
+    metadata:
+      labels:
+        app: config-service
+    spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": linux
+      containers:
+        - name: config-service
+          image: briansjavablog/config-service:k8
+          ports:
+            - containerPort: 8888
+              name: config-service
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: config-service
+spec:
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8888
+  selector:
+    app: config-service
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: config-consumer-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: config-consumer-service
+  template:
+    metadata:
+      labels:
+        app: config-consumer-service
+    spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": linux
+      containers:
+        - name: config-consumer-service
+          image: briansjavablog/config-consumer-service:k8
+          ports:
+            - containerPort: 80
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: config-service-consumer-lb
+spec:
+  type: NodePort
+  selector:
+    app: config-consumer-service
+  ports:
+    - port: 8080
+      targetPort: 8080
+      nodePort: 30001
