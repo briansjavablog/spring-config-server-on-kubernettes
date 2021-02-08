@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: config-consumer-service
+  cloud:
+    config:
+      profile: uat
+      # target URI for config server corresponds to Kubernetes Service config-service
+      uri: http://config-service:8888
+      # the label must correspond with the branch name in Github
+      label: main
+      fail-fast: true
+      retry:
+        # retry configuration retrieval up to 100 times
+        max-attempts: 30
+        # max backoff interval
+        max-interval: 8000

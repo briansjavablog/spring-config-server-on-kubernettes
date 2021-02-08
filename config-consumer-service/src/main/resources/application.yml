@@ -1,0 +1,22 @@
+spring:
+  application:
+    name: config-consumer-service
+    server:
+      port: 8080
+  #config:
+  #  import: optional:configserver:http://config-service
+#  cloud:
+#    config:
+      #uri: http://config-service
+      #profile: uat
+      # the label must correspond with the branch name in Github
+      #label: main
+      #fail-fast: true
+      #retry:
+      #  max-attempts: 1000
+      #  max-interval: 5000
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"

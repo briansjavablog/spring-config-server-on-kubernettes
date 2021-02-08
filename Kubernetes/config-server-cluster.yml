@@ -19,7 +19,23 @@ spec:
           image: briansjavablog/config-service:k8
           ports:
             - containerPort: 8888
-              name: config-service
+              #name: config-service
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8888
+            initialDelaySeconds: 180
+            timeoutSeconds: 10
+            periodSeconds: 3
+            failureThreshold: 2
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8888
+            initialDelaySeconds: 240
+            timeoutSeconds: 2
+            periodSeconds: 8
+            failureThreshold: 1
 ---
 apiVersion: v1
 kind: Service
@@ -28,7 +44,7 @@ metadata:
 spec:
   ports:
     - protocol: TCP
-      port: 80
+      port: 8888
       targetPort: 8888
   selector:
     app: config-service
@@ -53,7 +69,23 @@ spec:
         - name: config-consumer-service
           image: briansjavablog/config-consumer-service:k8
           ports:
-            - containerPort: 80
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 180
+            timeoutSeconds: 2
+            periodSeconds: 3
+            failureThreshold: 2
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 240
+            timeoutSeconds: 2
+            periodSeconds: 8
+            failureThreshold: 1
 ---
 apiVersion: v1
 kind: Service
