@@ -18,6 +18,7 @@
     </appender>
 
     <logger name="org.springframework.retry" level="DEBUG" />
+    <logger name="org.springframework.web" level="DEBUG" />
 
     <root level="INFO">
         <appender-ref ref="CONSOLE" />

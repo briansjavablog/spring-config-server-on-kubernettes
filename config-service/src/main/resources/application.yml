@@ -1,0 +1,23 @@
+spring:
+  application:
+    name: config-server
+    server:
+      port: 8888
+
+  cloud:
+    config:
+      server:
+        git:
+          # URI of GIT repo containing properties
+          uri: https://github.com/briansjavablog/spring-config-server-on-kubernettes
+          default-label: main
+          search-paths: configuration
+
+management:
+  endpoint:
+    health:
+      show-details: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
