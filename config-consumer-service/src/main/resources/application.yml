@@ -16,6 +16,9 @@ spring:
       #  max-attempts: 1000
       #  max-interval: 5000
 management:
+  endpoint:
+    health:
+      show-details: always
   endpoints:
     web:
       exposure:
