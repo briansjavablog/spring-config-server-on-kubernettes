@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   name: cloud-config-server-demo
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: config-service
@@ -54,7 +54,7 @@ kind: Deployment
 metadata:
   name: config-consumer-service
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app: config-consumer-service

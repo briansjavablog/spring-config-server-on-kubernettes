@@ -15,8 +15,8 @@ spring:
 
 management:
   endpoint:
-    health:
-      show-details: always
+      health:
+        show-details: always
   endpoints:
     web:
       exposure:

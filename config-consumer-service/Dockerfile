@@ -4,9 +4,6 @@ MAINTAINER Brian Hannaway
 
 WORKDIR /app
 
-#RUN chmod -R +x /app
-#RUN ls -lrth /app
-
 # handy for debugging connectivity to config service
 RUN apt-get update && apt-get install -y curl
 
