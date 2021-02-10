@@ -1,0 +1,100 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cloud-config-server-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: config-service
+  template:
+    metadata:
+      labels:
+        app: config-service
+    spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": linux
+      containers:
+        - name: config-service
+          image: briansjavablog/config-service:k8
+          ports:
+            - containerPort: 8888
+              #name: config-service
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8888
+            initialDelaySeconds: 20
+            timeoutSeconds: 10
+            periodSeconds: 3
+            failureThreshold: 2
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8888
+            initialDelaySeconds: 30
+            timeoutSeconds: 2
+            periodSeconds: 8
+            failureThreshold: 1
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: config-service
+spec:
+  ports:
+    - protocol: TCP
+      port: 8888
+      targetPort: 8888
+  selector:
+    app: config-service
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: config-consumer-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: config-consumer-service
+  template:
+    metadata:
+      labels:
+        app: config-consumer-service
+    spec:
+      nodeSelector:
+        "beta.kubernetes.io/os": linux
+      containers:
+        - name: config-consumer-service
+          image: briansjavablog/config-consumer-service:k8
+          ports:
+            - containerPort: 8080
+          readinessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 30
+            timeoutSeconds: 2
+            periodSeconds: 3
+            failureThreshold: 2
+          livenessProbe:
+            httpGet:
+              path: /actuator/health
+              port: 8080
+            initialDelaySeconds: 40
+            timeoutSeconds: 2
+            periodSeconds: 8
+            failureThreshold: 2
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: config-service-consumer-lb
+spec:
+  type: LoadBalancer
+  selector:
+    app: config-consumer-service
+  ports:
+    - port: 80
+      targetPort: 8080
