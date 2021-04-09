@@ -1,9 +1,6 @@
 spring:
   application:
     name: config-server
-    server:
-      port: 8888
-
   cloud:
     config:
       server:
@@ -12,7 +9,8 @@ spring:
           uri: https://github.com/briansjavablog/spring-config-server-on-kubernettes
           default-label: main
           search-paths: configuration
-
+server:
+  port: 8888
 management:
   endpoint:
       health:

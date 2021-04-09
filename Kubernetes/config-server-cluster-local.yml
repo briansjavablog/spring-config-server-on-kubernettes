@@ -19,7 +19,6 @@ spec:
           image: briansjavablog/config-service:k8
           ports:
             - containerPort: 8888
-              #name: config-service
           readinessProbe:
             httpGet:
               path: /actuator/health
@@ -98,4 +97,4 @@ spec:
   ports:
     - port: 8080
       targetPort: 8080
-      nodePort: 30001
+      nodePort: 30008

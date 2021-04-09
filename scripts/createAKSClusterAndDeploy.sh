@@ -1,7 +1,7 @@
 #!/bin/sh
 
-RESOURCE_GROUP=config-demo-resource-group-2
-CLUSTER_NAME=config-server-cluster-2
+RESOURCE_GROUP=config-demo-resource-group
+CLUSTER_NAME=config-server-cluster
 LOCATION=ukwest
 az
 az group create --location $LOCATION --resource-group $RESOURCE_GROUP
