@@ -6,6 +6,7 @@ spring:
       profile: uat
       # target URI for config server corresponds to Kubernetes Service config-service
       uri: http://config-service:8888
+      #uri: http://localhost:8888
       # the label must correspond with the branch name in Github
       label: main
       fail-fast: true
